@@ -1,5 +1,5 @@
 SUMMARY:
-	ROM0: 416 bytes used / 15968 free
+	ROM0: 440 bytes used / 15944 free
 	WRAM0: 214 bytes used / 3882 free
 
 ROM0 bank #0:
@@ -20,8 +20,6 @@ ROM0 bank #0:
 	         $0000 = team_arena_cell_address
 	SECTION: $0000 ($0000 bytes) ["Ejercicio 12"]
 	         $0000 = team_arena_box_fits
-	SECTION: $0000 ($0000 bytes) ["Ejercicio 06"]
-	         $0000 = bomb_ray_down_blocked
 	SECTION: $0000 ($0000 bytes) ["Ejercicio 11"]
 	         $0000 = arena_stamp_pattern
 	SECTION: $0000-$0062 ($0063 bytes) ["Test helpers"]
@@ -55,15 +53,19 @@ ROM0 bank #0:
 	         $0159 = player_move_down
 	         $015f = player_move_from_joypad
 	         $0172 = player_move_from_joypad.arriba
-	SECTION: $0179-$0191 ($0019 bytes) ["Ejercicio 05"]
+	SECTION: $0179-$0195 ($001d bytes) ["Ejercicio 05"]
 	         $0179 = arena_copy_row_up
-	         $0187 = arena_copy_row_up.loop
-	SECTION: $0192-$01aa ($0019 bytes) ["Test data"]
-	         $0192 = tst_row4
-	         $01a2 = tst_pattern1
-	         $01a8 = tst_pattern2
-	EMPTY: $01ab-$3fff ($3e55 bytes)
-	TOTAL EMPTY: $3e60 bytes
+	         $018b = arena_copy_row_up.loop
+	SECTION: $0196-$01ae ($0019 bytes) ["Test data"]
+	         $0196 = tst_row4
+	         $01a6 = tst_pattern1
+	         $01ac = tst_pattern2
+	SECTION: $01af-$01c2 ($0014 bytes) ["Ejercicio 06"]
+	         $01af = bomb_ray_down_blocked
+	         $01b5 = bomb_ray_down_blocked.loop
+	         $01bc = bomb_ray_down_blocked.cero
+	EMPTY: $01c3-$3fff ($3e3d bytes)
+	TOTAL EMPTY: $3e48 bytes
 
 WRAM0 bank #0:
 	SECTION: $c000-$c0d0 ($00d1 bytes) ["Arena"]

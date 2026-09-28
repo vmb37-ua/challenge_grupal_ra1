@@ -71,7 +71,7 @@ ld hl, DPAD
 ;; af= 0B..     → MEM C0E0 = 0B (player_row)
 ;;   y luego ya NO para más (11 = $0B es la última fila jugable)
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: Falla  (OK / Falla)
 ;;   Después, pulsa ↑ una vez por parada:
 ;; af= 0A..     → MEM C0E0 = 0A (player_row)
 ;; af= 09..     → MEM C0E0 = 09 (player_row)
@@ -88,10 +88,10 @@ ld hl, DPAD
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
+;;  *  E:    2 => -2     (1 fix = -1 tramo)
 ;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
 ;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;      TOTAL:     -2 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *

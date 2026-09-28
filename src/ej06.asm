@@ -31,16 +31,28 @@ SECTION "Ejercicio 06", ROM0
 ;;    NZ, if all D cells are empty
 ;;
 bomb_ray_down_blocked::
-    ;;; <<YOUR CODE>>
-
+    call arena_cell_address ;; FIX <S><1>
+    ld bc, ARENA_WIDTH
+    .loop:
+    ld a, [hl]
+    cp 0
+    jr z, .cero
+    xor a
+    ret z
+    .cero:
+    add hl, bc
+    dec d
+    jr nz, .loop
+    or 1
+    ret
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SÍ  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej06 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK  (OK / Falla) Ok
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -58,7 +70,7 @@ bomb_ray_down_blocked::
 ;; C080  .. .. .. .. 02 .. .. ..|.. .. .. .. .. .. .. ..| ← fila 8: bloque
 ;; C090  .. .. .. .. 00 .. .. ..|.. .. .. .. .. .. .. ..| ← fila 9
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: Falla  (OK / Falla) Falla
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -80,9 +92,9 @@ bomb_ray_down_blocked::
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  S:    1 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
 ;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;      TOTAL:     0 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *

@@ -27,14 +27,17 @@ SECTION "Ejercicio 05", ROM0
 ;;
 arena_copy_row_up::
     push de
-    ld c, 1
+    push bc ;; FIX <F><1>
+    ld c, 0 ;; FIX <F><2>
     call arena_cell_address
-    ld d, h
+    ld d, h ;; FIX<N><3>
     ld e, l
+    pop bc ;; FIX<F><4>
     dec b
+    ld c,0
     call arena_cell_address
     ld b, ARENA_WIDTH
-    .loop:
+    .loop: ;; FIX <S><5>
     ld a, [de]
     inc de
     ld [hl+], a
@@ -66,7 +69,7 @@ arena_copy_row_up::
 ;; C050  01 02 03 04 05 06 07 08|09 0A 0B 0C 0D 0E 0F 10| ← arena, fila 5 (la copia)
 ;; C060  01 02 03 04 05 06 07 08|09 0A 0B 0C 0D 0E 0F 10| ← arena, fila 6 (origen, sin cambios)
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -83,11 +86,11 @@ arena_copy_row_up::
 ;; ==========================================================
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
-;;  *  N:    __ => __     (1 fix = -1 tramo)
+;;  *  N:    1 => -1     (1 fix = -1 tramo)
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  S:    1 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    3 => -1     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     -1 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *

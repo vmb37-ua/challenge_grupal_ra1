@@ -6,7 +6,6 @@
 00:0000 arena_render_to_tilemap
 00:0000 arena_set_cell
 00:0000 arena_stamp_pattern
-00:0000 bomb_ray_down_blocked
 00:0000 player_next_to_bomb
 00:0000 team_arena_box_fits
 00:0000 team_arena_cell_address
@@ -34,10 +33,13 @@
 00:015f player_move_from_joypad
 00:0172 player_move_from_joypad.arriba
 00:0179 arena_copy_row_up
-00:0187 arena_copy_row_up.loop
-00:0192 tst_row4
-00:01a2 tst_pattern1
-00:01a8 tst_pattern2
+00:018b arena_copy_row_up.loop
+00:0196 tst_row4
+00:01a6 tst_pattern1
+00:01ac tst_pattern2
+00:01af bomb_ray_down_blocked
+00:01b5 bomb_ray_down_blocked.loop
+00:01bc bomb_ray_down_blocked.cero
 00:c000 arena
 00:c0d0 arena_end
 00:c0d0 arena_sentinel
