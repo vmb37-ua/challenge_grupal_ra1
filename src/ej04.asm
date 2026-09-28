@@ -22,16 +22,41 @@ SECTION "Ejercicio 04", ROM0
 ;;    NZ, if not
 ;;
 player_next_to_bomb::
-    ;;; <<YOUR CODE>>
+    ld a,[player_row]
+    ld b,a
+    ld a,[bomb_row]
+    inc a 
+    cp b 
+    jr nz, no_next
+    dec a 
+    dec a 
+    cp b 
+    jr nz, no_next
+    ld a, [player_col]
+    ld b,a 
+    ld a, [bomb_col] ;;FIX <S><1>: era col y no row
+    inc a
+    cp b 
+    jr nz, no_next
+    dec a 
+    dec a 
+    cp b 
+    jr nz, no_next
+    or 1
+    ret 
+    no_next: ;;FIX <S><2>: Faltaban los :
+    xor a
+    ret 
+
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: __SI__  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej04 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -46,7 +71,7 @@ player_next_to_bomb::
 ;; C0E0  05 06 .. .. .. .. .. ..|.. .. .. .. .. .. .. ..| ← player_row, player_col
 ;; C0F0  05 07 .. .. .. .. .. ..|.. .. .. .. .. .. .. ..| ← bomb_row, bomb_col
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: __Falla__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -65,9 +90,9 @@ player_next_to_bomb::
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  S:    _2_ => _1_     (2 fix = -1 tramo. En grupos de 2 sólo)
 ;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;      TOTAL:     _1_ tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
