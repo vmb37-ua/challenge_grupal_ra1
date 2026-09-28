@@ -34,16 +34,16 @@ SECTION "Ejercicio 10", ROM0
 ;;
 arena_blast_cross::
     ;;; <<YOUR CODE>>
-    push de ;;Fix añadir push, falta
+    push de ;;FIX F1: añadir push, falta
     ld d, 3
     ld e, 3
     call arena_box_fits
     jr nz, .end
-    call arena_cell_address ;;Fix nombre mal escrito, sintaxis
+    call arena_cell_address ;;FIX S1: nombre mal escrito, sintaxis
     inc hl
     ld [hl], 0
     ld de, ARENA_WIDTH
-    add hl, de ;;Fix sumar con de en vez de l, error
+    add hl, de ;;FIX E1: sumar con de en vez de l, error
     ld [hl], 0
     dec hl
     ld [hl], 0
