@@ -24,8 +24,15 @@ SECTION "Ejercicio 07", ROM0
 ;; Increments the row pointed to by HL,
 ;; without entering the wall.
 ;; 📥 INPUT: HL = address of the row (e.g. &player_row)
+
+DEF LIMITE_UNO = ARENA_HEIGHT-2
+    DEF DPAD = $FF00
 player_move_down::
-    ;;; <<YOUR CODE>>
+    ld a, LIMITE_UNO
+    cp [hl]
+    ret z
+    inc [hl]
+    ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reads the D-Pad and moves player_row up/down
@@ -33,15 +40,29 @@ player_move_down::
 ;;
 player_move_from_joypad::
     ;;; <<YOUR CODE>>
-
+ld hl, DPAD
+    ld [hl], $10
+    ld a, [hl]
+    ld a, [hl]
+    ld a, [hl]
+    ld hl, player_row
+    bit 2, a
+    jr z, .arriba
+    call player_move_down
+    ret
+    .arriba:
+    bit 3, a
+    ret z
+    call player_move_up
+    ret   
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: OK  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej07 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK  (OK / Falla)
 ;;   Pulsa ↓ una vez por parada. Paradas, en orden:
 ;; af= 07..     → MEM C0E0 = 07 (player_row)
 ;; af= 08..     → MEM C0E0 = 08 (player_row)

@@ -1,0 +1,84 @@
+SUMMARY:
+	ROM0: 416 bytes used / 15968 free
+	WRAM0: 214 bytes used / 3882 free
+
+ROM0 bank #0:
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 03"]
+	         $0000 = arena_count_in_row
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 09"]
+	         $0000 = arena_count_blocks
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 04"]
+	         $0000 = player_next_to_bomb
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 01"]
+	         $0000 = arena_init
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 08"]
+	         $0000 = arena_render_to_tilemap
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 10"]
+	         $0000 = arena_blast_cross
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 02"]
+	         $0000 = arena_set_cell
+	         $0000 = team_arena_cell_address
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 12"]
+	         $0000 = team_arena_box_fits
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 06"]
+	         $0000 = bomb_ray_down_blocked
+	SECTION: $0000 ($0000 bytes) ["Ejercicio 11"]
+	         $0000 = arena_stamp_pattern
+	SECTION: $0000-$0062 ($0063 bytes) ["Test helpers"]
+	         $0000 = tst_memset
+	         $0005 = tst_memcpy
+	         $000c = tst_ramp
+	         $000e = tst_ramp.next
+	         $0014 = tst_fill_arena
+	         $0022 = tst_dirty_ram
+	         $0035 = tst_set_bomb_player
+	         $0042 = tst_fill_tilemap
+	         $0047 = tst_fill_tilemap.page
+	         $0049 = tst_fill_tilemap.byte
+	         $0051 = tst_lcd_off
+	         $0056 = tst_lcd_off.wait
+	SECTION: $0063-$009d ($003b bytes) ["Test ej05"]
+	         $0063 = test_ej05
+	SECTION: $009e-$00cf ($0032 bytes) ["Given routines"]
+	         $009e = hl_move_by_increment
+	         $00b9 = player_move_up
+	         $00bf = arena_copy_row_to_tilemap
+	SECTION: $00d0-$00f4 ($0025 bytes) ["Reference routines"]
+	         $00d0 = arena_cell_address
+	         $00de = arena_box_fits
+	EMPTY: $00f5-$00ff ($000b bytes)
+	SECTION: $0100-$014f ($0050 bytes) ["Header"]
+	SECTION: $0150-$0158 ($0009 bytes) ["Entry point"]
+	         $0150 = main
+	         $0157 = main.end
+	SECTION: $0159-$0178 ($0020 bytes) ["Ejercicio 07"]
+	         $0159 = player_move_down
+	         $015f = player_move_from_joypad
+	         $0172 = player_move_from_joypad.arriba
+	SECTION: $0179-$0191 ($0019 bytes) ["Ejercicio 05"]
+	         $0179 = arena_copy_row_up
+	         $0187 = arena_copy_row_up.loop
+	SECTION: $0192-$01aa ($0019 bytes) ["Test data"]
+	         $0192 = tst_row4
+	         $01a2 = tst_pattern1
+	         $01a8 = tst_pattern2
+	EMPTY: $01ab-$3fff ($3e55 bytes)
+	TOTAL EMPTY: $3e60 bytes
+
+WRAM0 bank #0:
+	SECTION: $c000-$c0d0 ($00d1 bytes) ["Arena"]
+	         $c000 = arena
+	         $c0d0 = arena_end
+	         $c0d0 = arena_sentinel
+	SECTION: $c0d1-$c0d1 ($0001 byte) ["Test vars"]
+	         $c0d1 = tst_prev_row
+	EMPTY: $c0d2-$c0df ($000e bytes)
+	SECTION: $c0e0-$c0e1 ($0002 bytes) ["Player Data"]
+	         $c0e0 = player_row
+	         $c0e1 = player_col
+	EMPTY: $c0e2-$c0ef ($000e bytes)
+	SECTION: $c0f0-$c0f1 ($0002 bytes) ["Bomb Data"]
+	         $c0f0 = bomb_row
+	         $c0f1 = bomb_col
+	EMPTY: $c0f2-$cfff ($0f0e bytes)
+	TOTAL EMPTY: $0f2a bytes

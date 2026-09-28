@@ -26,16 +26,33 @@ SECTION "Ejercicio 05", ROM0
 ;;    B: source row (1 .. ARENA_HEIGHT-1, never 0)
 ;;
 arena_copy_row_up::
-    ;;; <<YOUR CODE>>
+    push de
+    ld c, 1
+    call arena_cell_address
+    ld d, h
+    ld e, l
+    dec b
+    call arena_cell_address
+    ld b, ARENA_WIDTH
+    .loop:
+    ld a, [de]
+    inc de
+    ld [hl+], a
+    dec b
+    ld a, b
+    cp 0
+    jr nz, .loop
+    pop de
+    ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SÍ (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej05 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: Ok (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]

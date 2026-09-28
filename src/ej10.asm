@@ -34,15 +34,38 @@ SECTION "Ejercicio 10", ROM0
 ;;
 arena_blast_cross::
     ;;; <<YOUR CODE>>
+    push de ;;Fix añadir push, falta
+    ld d, 3
+    ld e, 3
+    call arena_box_fits
+    jr nz, .end
+    call arena_cell_address ;;Fix nombre mal escrito, sintaxis
+    inc hl
+    ld [hl], 0
+    ld de, ARENA_WIDTH
+    add hl, de ;;Fix sumar con de en vez de l, error
+    ld [hl], 0
+    dec hl
+    ld [hl], 0
+    inc hl
+    inc hl
+    ld [hl], 0
+    dec hl
+    add hl, de
+    ld [hl], 0
+    xor a
+    .end:
+    pop de
+    ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SÍ  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej10 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -58,7 +81,7 @@ arena_blast_cross::
 ;; C040  02 02 02 02 00 00 00 02|02 02 02 02 02 02 02 02| ← arena, fila 4: (4,4)(4,5)(4,6) a $00
 ;; C050  02 02 02 02 02 00 02 02|02 02 02 02 02 02 02 02| ← arena, fila 5
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -77,10 +100,10 @@ arena_blast_cross::
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  E:    1 => -1     (1 fix = -1 tramo)
+;;  *  S:    1 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    1 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     -1 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
