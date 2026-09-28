@@ -30,10 +30,24 @@ DEF ARENA_TILEMAP = $9822
 ;;
 arena_render_to_tilemap::
     ;;; <<YOUR CODE>>
+    ld hl, ARENA_TILEMAP
+    ld b, ARENA_HEIGHT
+    push hl
+    .do:
+        call arena_copy_row_to_tilemap
+        push de
+        ld de, ARENA_WIDTH
+        add hl, de
+        pop de
+        dec b
+        jr nz, .do
+        pop hl
+        ret
+
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SÍ  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej08 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
