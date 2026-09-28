@@ -19,16 +19,29 @@ SECTION "Ejercicio 01", ROM0
 ;; the player position.
 ;;
 arena_init::
-    ;;; <<YOUR CODE>>
+    ld hl,arena
+    ld a,ARENA_SIZE
+    ld b,a
+    ld a,SOFT_BLOCK ;;FIX <S><1>: Mayus faltante
+    .loop:
+    ld[hl+], a
+    dec b
+    jr nz, .loop
+    ld a,ARENA_SENTINEL ;;FIX <S><2>: [] sin quitar
+    ld [arena_sentinel], a
+    ld a,1
+    ld [player_row], a
+    ld [player_col], a
+    ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: __SI__  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej01 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -42,7 +55,7 @@ arena_init::
 ;; C000  02 02 02 02 02 02 02 02|02 02 02 02 02 02 02 02| ← arena, fila 0
 ;; C0E0  01 01 .. .. .. .. .. ..|.. .. .. .. .. .. .. ..| ← player_row, player_col
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -60,9 +73,9 @@ arena_init::
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  S:    _2_ => _1_     (2 fix = -1 tramo. En grupos de 2 sólo)
 ;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;      TOTAL:     _1_ tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
