@@ -1,4 +1,4 @@
-DEF TEST EQUS "test_ej05"
+DEF TEST EQUS "test_ej10"
 
 ;;==============================================================
 ;; Challenge 3 · Programa de pruebas
