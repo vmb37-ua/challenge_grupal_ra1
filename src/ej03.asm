@@ -28,16 +28,29 @@ SECTION "Ejercicio 03", ROM0
 ;;    A: number of cells of that row equal to E
 ;;
 arena_count_in_row::
-    ;;; <<YOUR CODE>>
+    ld c,0 ;;FIX <F><1>: faltaba añadirlo antes de la llamada
+    call arena_cell_address
+    ld b, ARENA_WIDTH
+    ld c,0 ;;FIX <S><1>: ld c,0 en vez de xor c
+    loop:
+    ld a, [hl+]
+    cp e 
+    jr nz, no_inc
+    inc c 
+    no_inc:
+    dec b 
+    jr nz, loop 
+    ld a, c 
+    ret ;;FIX <F><2>: faltaba añadir el ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: __SI__  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej03 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -51,7 +64,7 @@ arena_count_in_row::
 ;; =====================================================|
 ;; C040  03 00 03 02 00 03 03 00|03 02 00 00 03 00 00 02| ← arena, fila 4
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -69,9 +82,9 @@ arena_count_in_row::
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  S:    _1_ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    _2_ => _1_     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     _1_ tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
