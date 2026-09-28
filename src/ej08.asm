@@ -30,18 +30,21 @@ DEF ARENA_TILEMAP = $9822
 ;;
 arena_render_to_tilemap::
     ;;; <<YOUR CODE>>
+    push de                     ;; FIX F1: guardar DE (el test espera el valor de entrada)
+    ld de, arena                ;;FIX F2: falta meter arena a de 
     ld hl, ARENA_TILEMAP
-    ld b, ARENA_HEIGHT
+    ld c, ARENA_HEIGHT          ;; FIX E1: b lo pisa, contador con c
     push hl
     .do:
         call arena_copy_row_to_tilemap
         push de
-        ld de, ARENA_WIDTH
+        ld de, 32               ;; Fix E num 2 Fila son 32, no arena
         add hl, de
         pop de
-        dec b
+        dec c                   
         jr nz, .do
         pop hl
+        pop de                  
         ret
 
 
@@ -52,7 +55,7 @@ arena_render_to_tilemap::
 ;; === CASOS DE PRUEBA   (test_ej08 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -67,7 +70,7 @@ arena_render_to_tilemap::
 ;; 9830  00 00 FF FF FF FF FF FF|FF FF FF FF FF FF FF FF| ← ... y termina en 9831
 ;; 98E0  .. .. 02 .. .. .. .. ..|.. .. .. .. .. .. .. ..| ← tilemap: fila 6 de la arena
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -84,10 +87,10 @@ arena_render_to_tilemap::
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
 ;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
+;;  *  E:    2 => -2     (1 fix = -1 tramo)
 ;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  F:    2 => -1     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     -3 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
