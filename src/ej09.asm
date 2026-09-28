@@ -22,15 +22,32 @@ SECTION "Ejercicio 09", ROM0
 ;;
 arena_count_blocks::
     ;;; <<YOUR CODE>>
+    ld hl, arena ;; FIX S1:board no existe, es arena
+    ld b, 0
 
+    .loop:
+    ld a, [hl+]
+    cp 0
+    jr z, .sig
+    inc b
+
+    .sig:
+    ld a, l
+    cp LOW(ARENA_SENTINEL)
+    jr nz, .loop
+    ld a, h
+    cp HIGH(ARENA_SENTINEL)
+    jr nz, .loop
+    ld a, b
+    ret        
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SI  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej09 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: Falla  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -45,7 +62,7 @@ arena_count_blocks::
 ;; C000  02 02 02 02 02 02 02 02|02 02 02 02 02 02 02 02| ← arena, fila 0 (todas SOFT_BLOCK)
 ;; C0D0  80 .. .. .. .. .. .. ..|.. .. .. .. .. .. .. ..| ← arena_sentinel
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: Falla  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -65,11 +82,11 @@ arena_count_blocks::
 ;; ==========================================================
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
-;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  N:    0 => 0     (1 fix = -1 tramo)
+;;  *  E:    0 => 0     (1 fix = -1 tramo)
+;;  *  S:    1 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    0 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     0 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
