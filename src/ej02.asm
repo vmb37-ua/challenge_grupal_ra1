@@ -20,7 +20,18 @@ SECTION "Ejercicio 02", ROM0
 ;; ⚠️ NOTA: aquí se llama `team_arena_cell_address` para no
 ;;    chocar con la versión de referencia. No cuenta como FIX.
 team_arena_cell_address::
-    ;;; <<YOUR CODE>>
+    ld a,b 
+    add a 
+    add a 
+    add a 
+    add a 
+    add c 
+    ld hl,arena 
+    ld c,a 
+    xor a 
+    ld b,a 
+    add hl, bc 
+    ret
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Uses `arena_cell_address` to calculate address in HL
@@ -28,16 +39,19 @@ team_arena_cell_address::
 ;; 🔙 RETURNS: A: value the cell had BEFORE writing
 ;; ⚠️ NOTA: Llama a `arena_cell_address` no a `team_arena_cell_address`.
 arena_set_cell::
-    ;;; <<YOUR CODE>>
+    call arena_cell_address
+    ld a, [hl]
+    ld [hl], e
+    ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: __SI__  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej02 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -48,7 +62,7 @@ arena_set_cell::
 ;;          ← DE no debe cambiar
 ;;          ← HL dirección de la celda (5,7). BC no forma parte del contrato: no se comprueba
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: __OK__  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -68,7 +82,7 @@ arena_set_cell::
 ;;  *  E:    __ => __     (1 fix = -1 tramo)
 ;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
 ;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;      TOTAL:     _0_ tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
