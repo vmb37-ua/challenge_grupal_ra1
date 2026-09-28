@@ -30,15 +30,29 @@ SECTION "Ejercicio 11", ROM0
 ;;
 arena_stamp_pattern::
     ;;; <<YOUR CODE>>
-
+    ld b, [hl]
+    inc hl
+    ld c, [hl]
+    ld d, h
+    ld e, l
+    call arena_cell_address
+    inc de
+    .loop:
+        ld a , [de]
+        ld [hl], HARD_BLOCK
+        call hl_move_by_increment
+        inc de
+        or a
+        jr nz, .loop
+        ret
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SI  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej11 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -52,7 +66,7 @@ arena_stamp_pattern::
 ;; C030  00 00 00 00 00 03 03 00|00 00 00 00 00 00 00 00| ← arena, fila 3: (3,5)(3,6) a $03
 ;; C040  00 00 00 00 00 00 03 03|00 00 00 00 00 00 00 00| ← arena, fila 4: (4,6)(4,7) a $03
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -69,11 +83,11 @@ arena_stamp_pattern::
 ;; ==========================================================
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
-;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  N:    0 => 0     (1 fix = -1 tramo)
+;;  *  E:    0 => 0     (1 fix = -1 tramo)
+;;  *  S:    0 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    0 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:    0 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *

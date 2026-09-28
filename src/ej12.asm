@@ -32,15 +32,34 @@ SECTION "Ejercicio 12", ROM0
 ;;    ejercicios. Ya viene cambiado: no cuenta como FIX.
 team_arena_box_fits::
     ;;; <<YOUR CODE>>
+    ld a, b
+    or a
+    jr z, .dont_fit
+    ld a, c
+    or a
+    jr z, .dont_fit
+    ld a, d
+    add c
+    cp ARENA_WIDTH
+    jr nc, .dont_fit
+    ld a, e
+    add b
+    cp ARENA_HEIGHT
+    jr nc, .dont_fit
+    xor a
+    ret
+    .dont_fit:
+    or 1
+    ret
 
 
 ;; ==========================================================
-;;  ENSAMBLA: ____  (SÍ / NO)
+;;  ENSAMBLA: SI  (SÍ / NO)
 ;; ==========================================================
 ;; === CASOS DE PRUEBA   (test_ej12 en main.asm)
 ;;  * Comprobar que CPU y MEM coinciden con valor esperado
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 1: ____  (OK / Falla)
+;; * CASO 1: OK (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -51,7 +70,7 @@ team_arena_box_fits::
 ;;            flag Z: 1  ← Z = cabe · NZ = no cabe
 ;;          ← BC, DE no deben cambiar (son entrada)
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; * CASO 2: ____  (OK / Falla)
+;; * CASO 2: OK  (OK / Falla)
 ;;
 ;;        >>>>> RESULTADO ESPERADO (Comprobar) <<<<<
 ;; [CPU]
@@ -64,11 +83,11 @@ team_arena_box_fits::
 ;; ==========================================================
 ;; === FIXES
 ;;  Tipo: Cant. => Tramos
-;;  *  N:    __ => __     (1 fix = -1 tramo)
-;;  *  E:    __ => __     (1 fix = -1 tramo)
-;;  *  S:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;  *  F:    __ => __     (2 fix = -1 tramo. En grupos de 2 sólo)
-;;      TOTAL:     __ tramos
+;;  *  N:    0 => 0     (1 fix = -1 tramo)
+;;  *  E:    0 => 0     (1 fix = -1 tramo)
+;;  *  S:    0 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;  *  F:    0 => 0     (2 fix = -1 tramo. En grupos de 2 sólo)
+;;      TOTAL:     0 tramos
 ;;
 ;; EXPLICACIONES ADICIONALES DE FIXES (si es necesario)
 ;;  *
